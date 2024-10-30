@@ -7,7 +7,6 @@ if ($_SESSION['status'] != "login") {
     exit(); 
 }
 
-
 if (isset($_POST['logout'])) {
     session_destroy(); 
     header("Location: index.php"); 
@@ -73,20 +72,31 @@ $firstName = strtok($fullname, " ");
         <div class="mt-4">
             <h4 class="mb-3">Data Pengguna</h4>
             <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>USER ID</th>
+                        <th>USERNAME</th>
+                        <th>NAMA LENGKAP</th>
+                        <th>PASSWORD</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php
-                    // Query to get the logged-in user's data only
-                    $query = "SELECT * FROM users WHERE username='$username'";
+                    // Query to get all users
+                    $query = "SELECT * FROM users";
                     $result = mysqli_query($connect, $query);
                     
                     if ($result && mysqli_num_rows($result) > 0) {
-                        $user = mysqli_fetch_assoc($result);
-                        echo "<tr><td><strong>USER ID</strong></td><td>" . htmlspecialchars($user['id']) . "</td></tr>";
-                        echo "<tr><td><strong>NAMA LENGKAP</strong></td><td>" . htmlspecialchars($user['fullname']) . "</td></tr>";
-                        echo "<tr><td><strong>USERNAME</strong></td><td>" . htmlspecialchars($user['username']) . "</td></tr>";
-                        echo "<tr><td><strong>PASSWORD</strong></td><td>********</td></tr>"; // Masking password
+                        while ($user = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($user['id']) . "</td>";
+                            echo "<td>" . htmlspecialchars($user['username']) . "</td>";
+                            echo "<td>" . htmlspecialchars($user['fullname']) . "</td>";
+                            echo "<td>********</td>"; // Masking password
+                            echo "</tr>";
+                        }
                     } else {
-                        echo "<tr><td colspan='2' class='text-center'>Tidak ada data</td></tr>";
+                        echo "<tr><td colspan='4' class='text-center'>Tidak ada data</td></tr>";
                     }
                     ?>
                 </tbody>

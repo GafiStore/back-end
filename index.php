@@ -2,11 +2,9 @@
 session_start();
 include "config.php"; 
 
-// Ambil input
 $username = $_POST["username"] ?? ''; 
 $password = $_POST["password"] ?? ''; 
 
-// Debugging: Cek input
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) { 
         $_SESSION["error"] = "Tidak boleh ada yang kosong!"; 
@@ -22,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit(); 
     }
 
-    // Query untuk mengecek user
+    // Query untuk mengecek user di database
     $query = "SELECT * FROM users WHERE username='$username'"; 
     $result = mysqli_query($connect, $query); 
 
@@ -76,6 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="alert alert-danger text-center">
                     <?= $_SESSION["error"]; unset($_SESSION["error"]); ?>
                 </div>
+            <?php endif; ?>
+            <?php if (isset($_SESSION["status"]) && $_SESSION["status"] == "Berhasil membuat akun. Silahkan login") : ?>
+                <div class="alert alert-success text-center">
+                    <?= $_SESSION["status"]; ?>
+                </div>
+                <?php unset($_SESSION["status"]); ?>
             <?php endif; ?>
 
             <form action="" method="POST">

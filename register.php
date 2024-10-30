@@ -4,11 +4,9 @@ include "config.php";
 
 $fullname = $_POST["fullname"] ?? ''; 
 $username = $_POST["username"] ?? ''; 
-$password = md5($_POST["password"] ?? ''); 
+$password = password_hash($_POST["password"] ?? '', PASSWORD_DEFAULT); // Gunakan password_hash
 
-// Periksa jika form disubmit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     if (!empty($fullname) && !empty($username) && !empty($password)) {
         $query = "INSERT INTO users (fullname, username, password) VALUES ('$fullname', '$username', '$password')"; 
 
