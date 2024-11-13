@@ -20,7 +20,7 @@ if (isset($_POST['delete'])) {
     $userIdToDelete = intval($_POST['user_id']);
     $deleteQuery = "DELETE FROM users WHERE id='$userIdToDelete'";
     mysqli_query($connect, $deleteQuery);
-    header("Location: dashboard_root.php"); // Refresh to see changes
+    header("Location: dashboard_admin.php"); // Refresh to see changes
     exit();
 }
 
@@ -41,7 +41,7 @@ if (isset($_POST['add_user'])) {
         
         if (mysqli_query($connect, $insertQuery)) {
             // Success
-            header("Location: dashboard_root.php"); // Refresh to see changes
+            header("Location: dashboard_admin.php"); // Refresh to see changes
             exit();
         } else {
             $_SESSION['error'] = "Error: " . mysqli_error($connect); // Show database error

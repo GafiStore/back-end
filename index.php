@@ -12,11 +12,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Cek apakah username dan password adalah "root"
-    if ($username === 'root' && $password === 'root') {
+    // Cek apakah username dan password adalah "admin"
+    if ($username === 'admin' && $password === 'admin') {
         $_SESSION["username"] = $username; 
         $_SESSION["status"] = "login"; 
-        header("Location: dashboard_root.php"); 
+        header("Location: dashboard_admin.php"); 
+        exit(); 
+    }
+
+    // Cek apakah username dan password adalah "dosen"
+    if ($username === 'dosen' && $password === 'dosen') {
+        $_SESSION["username"] = $username; 
+        $_SESSION["status"] = "login"; 
+        header("Location: dashboard_dosen.php"); 
         exit(); 
     }
 
@@ -29,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $user['password'])) {
             $_SESSION["username"] = $username; 
             $_SESSION["status"] = "login"; 
-            header("Location: dashboard.php"); 
+            header("Location: dashboard_mhs.php"); 
             exit(); 
         } else {
             $_SESSION["error"] = "Username atau Password anda salah!"; 
